@@ -1,102 +1,56 @@
-/* RONIT SAINI
-210905322
-SECTION A 
-ROLL NO 51*/
-
-
-
-#include <unistd.h>
-#include <netdb.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
+#include <unistd.h>
+#include <errno.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/socket.h>
-
-#define MAX 5
-#define PORT 10200
-#define SA struct sockaddr
-
-void clifunc(int sockfd)
+#include <netinet/in.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <sys/wait.h>
+#include <signal.h>
+void main()
 {
-   int buff[MAX];
-   int n;
+    int sockid,res,len,n=1,size;
+    struct sockaddr_in addr;
+    sockid=socket(AF_INET,SOCK_STREAM,0);
+    addr.sin_family=AF_INET;
+    addr.sin_addr.s_addr=inet_addr("127.0.0.1");
+    addr.sin_port=htons(6996);
+    len=sizeof(addr);
 
-   bzero(buff, sizeof(buff));
-   printf("Enter the array : ");
+    res=connect(sockid,&addr,len);
 
-   for(int i=0;i<MAX;i++) scanf("%d",&buff[i]);
-
-   n = 0;
-   n=write(sockfd, buff, sizeof(buff));        
-   if(n==sizeof(buff))
-
-   {    
-       printf("Sent array succesfully:\n");
-   }
-
-   bzero(buff, sizeof(buff));
-   n=read(sockfd, buff, sizeof(buff));
-   if(n==sizeof(buff))
-   {    
-       printf("Received sorted array succesfully:");
-       for(int i=0;i<MAX;i++) printf("%d ",buff[i]);
-   }
-
-}
-
-
-int main()
-{
-   int sockfd, connfd;
-   struct sockaddr_in servaddr, cli;
-
-
-   sockfd = socket(AF_INET, SOCK_STREAM, 0);
-   if (sockfd == -1) {
-       printf("socket creation failed...\n");
-       exit(0);
-   }
-   else
-       printf("Socket successfully created..\n");
-
-   bzero(&servaddr, sizeof(servaddr));
-
-   // assign IP, PORT
-   servaddr.sin_family = AF_INET;
-   servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-   servaddr.sin_port = htons(PORT);
-
-   // connect the client socket to server socket
-   if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
-       printf("connection with the server failed...\n");
-       exit(0);
-   }
-
-   else
-       printf("connected to the server..\n");
-
-    pid_t pid = fork();
-    if (pid == 0)
+    if(res==-1)
     {
-        printf("Child => PPID: %d PID: %d\n", getppid(), getpid());
-        exit(EXIT_SUCCESS);
+        perror("\nConnection Error\n");
+        exit(1);
     }
-    else if (pid > 0)
-    {
-        printf("Parent => PID: %d\n", getpid());
-        printf("Waiting for child process to finish.\n");
-        wait(NULL);
-        printf("Child process finished.\n");
-    }
-    else
-    {
-        printf("Unable to create child process.\n");
-    }
-   // function for client
-   clifunc(sockfd);
 
-   // close the socket
-   close(sockfd);
+    printf("Enter Size of Array : \t");
+    scanf("%d",&size);
+    int buf[size],pid;
+    printf("\nEnter Array Elements : \n");
+    for(int i=0;i<size;i++)
+    {
+        scanf("%d",&buf[i]);
+    }
 
+    write(sockid,&size,sizeof(size));
+    
+    write(sockid,buf,size*sizeof(int));
+
+    n=read(sockid,buf,sizeof(buf));
+
+    n=read(sockid,&pid,sizeof(pid));
+
+    printf("Child Process ID : %d\n",pid);
+
+    printf("Sorted Array returned from Server : \n");
+
+    for(int i=0;i<size;i++)
+    {
+        printf("%d ",buf[i]);
+    }
 }

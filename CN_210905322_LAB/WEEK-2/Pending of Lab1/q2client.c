@@ -1,64 +1,41 @@
-/* RONIT SAINI
-210905322
-SECTION A 
-ROLL NO 51*/
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<stdio.h>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<stdlib.h>
+#include<string.h>
 
+int main(){
+	while(1){
+	int len,result,sockfd,i,n=1;
+	struct sockaddr_in address;
+	char ch[256],buf[256];
 
+	sockfd = socket(AF_LOCAL,SOCK_STREAM,0);
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#define PORTNO 9999
-void main()
-{
-    int len, result, n;
-    struct sockaddr_in address;
-    char ch[256], buffer[256];
+	address.sin_family=AF_LOCAL;
+	address.sin_addr.s_addr=inet_addr("127.0.0.1");
+	address.sin_port=htons(4003);
+	len = sizeof(address);
 
-    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
-    {
-        perror("Socket error");
-        exit(1);
-    }
-    printf("Client socket created..\n");
+	result = connect(sockfd,(struct sockaddr *)&address,len);
+	if(result == -1){
+		printf("\nCLIENT ERROR");
+		exit(1);
+	}
 
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = inet_addr("172.16.59.48");
-    address.sin_port = htons(PORTNO);
-    len = sizeof(address);
-
-    result = connect(sockfd, (struct sockaddr *)&address, len);
-    if (result == -1)
-    {
-        perror("\nConnection error");
-        exit(1);
-    }
-    printf("Connected to the server");
-
-    while (1)
-    {
-        printf("\nEnter String (\"Stop\" to stop): ");
-        gets(ch);
-        ch[strlen(ch)] = '\0';
-
-        write(sockfd, ch, strlen(ch));
-
-        if (strcmp(ch, "Stop") == 0)
-        {
-            printf("Client terminated...");
-            exit(0);
-        }
-        
-        read(sockfd, ch, strlen(ch));
-        
-        printf("\\nMessage from server : %s", ch);
-    }
-
-    close(sockfd);
+	printf("\nEnter the string: ");
+	gets(ch);
+	ch[strlen(ch)] = '\0';
+	if(strcmp(ch,"Stop") == 0){
+		close(sockfd);
+		break;
+	}
+	write(sockfd,ch,strlen(ch));
+	read(sockfd,buf,sizeof(buf));
+	printf("\nString after removing duplicates: ");
+	puts(buf);
+	close(sockfd);
+}
 }

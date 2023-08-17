@@ -1,82 +1,76 @@
-/* RONIT SAINI
-210905322
-SECTION A 
-ROLL NO 51*/
+#include<stdio.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<stdlib.h>
+#include<netinet/in.h>
 
+void removedups(char strings[][256],char ch[],char res[]){
+	int i,j=0,k=0,l;
+	for(i=0;ch[i]!='\0';i++){
+		if(ch[i] == ' '){
+			strings[j][k] = '\0';
+			j++;
+			k=0;
+		}
+		else{
+			strings[j][k] = ch[i];
+			k++;
+		}
+	}
+	strings[j][k] = '\0';
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <unistd.h>
-#define PORTNO 9999
+	k = 0;
+	for(i=0;i<j;i++){
+		for(l=1;l<j+1;l++){
+			if(strings[i][k] == '\0' || l==i){
+				continue;
+			}
+			if(strcmp(strings[i],strings[l]) == 0){
+				strings[l][k] = '\0';
+			}
+		}
+	}
 
-void removeDuplicates(char *sentence) {
-    char result[1024] = "";
-    char *token = strtok(sentence, " ");
-    while (token != NULL) {
-        if (strstr(result, token) == NULL) {
-            strcat(result, token);
-            strcat(result, " ");
-        }
-        token = strtok(NULL, " ");
-    }
-    strcpy(sentence, result);
+	for(i=0;i<j+1;i++){
+		if(strings[i][k] == '\0'){
+			continue;
+		}
+		else{
+			strcat(res,strings[i]);
+			strcat(res," ");
+		}
+	}
 }
 
-void main()
-{
-    int newsockfd, portno, clilen;
-    struct sockaddr_in seraddr, cliaddr;
-    char buffer[256];
+int main(){
+	int sockfd,newsockfd,portno,clilen,n=1,i;
+	struct sockaddr_in seraddr,cliaddr;
 
-    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
-    {
-        perror("Socket error");
-        exit(1);
-    }
-    printf("Server socket created..\n");
+	sockfd = socket(AF_LOCAL,SOCK_STREAM,0);
 
-    seraddr.sin_family = AF_INET;
-    seraddr.sin_addr.s_addr = inet_addr("172.16.59.48");
-    seraddr.sin_port = htons(PORTNO);
+	seraddr.sin_family = AF_LOCAL;
+	seraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	seraddr.sin_port = htons(4003);
 
-    if (bind(sockfd, (struct sockaddr *)&seraddr, sizeof(seraddr)) < 0)
-    {
-        perror("Bind error");
-        exit(1);
-    }
-    printf("Socket bind successful...\n");
+	bind(sockfd,(struct sockaddr*)&seraddr,sizeof(seraddr));
 
-    if (listen(sockfd, 5) == 0)
-        printf("Listening..\n");
-    else
-    {
-        printf("Listening failed...");
-        exit(1);
-    }
 
-    clilen = sizeof(seraddr);
-    newsockfd = accept(sockfd, (struct sockaddr *)&cliaddr, &clilen);
+	listen(sockfd,5);
 
-    while (1)
-    {
-        memset(buffer, 0, sizeof(buffer));
-        read(newsockfd, buffer, sizeof(buffer));
-        if (strcmp(buffer, "Stop") == 0)
-        {
-            printf("\nServer terminated...");
-            exit(0);
-        }
-        printf("\nMessage from client : %s", buffer);
-
-        removeDuplicates(buffer);
-
-        write(newsockfd, buffer, sizeof(buffer));
-    }
-
-    close(newsockfd);
+	while(1){
+		char buf[256]={""};
+		char strings[256][256] = {""};
+		char res[256] = {""};
+		printf("Server Waiting\n");
+		clilen = sizeof(cliaddr);
+		newsockfd = accept(sockfd,(struct sockaddr*)&cliaddr,&clilen);
+		read(newsockfd,buf,sizeof(buf));
+		if(strcmp(buf,"Stop") == 0){
+			exit(1);
+		}
+		removedups(strings,buf,res);
+		write(newsockfd,res,sizeof(res));
+		close(newsockfd);
+	}
 }

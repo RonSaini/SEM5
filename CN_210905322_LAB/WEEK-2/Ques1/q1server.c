@@ -1,9 +1,3 @@
-/* RONIT SAINI
-210905322
-SECTION A 
-ROLL NO 51*/
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -16,77 +10,60 @@ ROLL NO 51*/
 #include <arpa/inet.h>
 #include <sys/wait.h>
 #include <signal.h>
-
-void sort(int *arr)
+void swap(int* xp, int* yp)
 {
-    for (int i = 0; i < 4; i++)
-    {
-        int min = i;
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
 
-        for (int j = i; j < 5; j++)
-        {
-            if (arr[j] < arr[min])
-                min = j;
-        }
-
-        if (i != min)
-        {
-            int temp = arr[i];
-            arr[i] = arr[min];
-            arr[min] = temp;
+void sort(int arr[], int n)
+{
+    int i, j;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
+            }
         }
     }
 }
 
 void main()
 {
-    int sd, nd, n, len, reult;
-    struct sockaddr_in seradress, cliaddr;
-    int buf[5];
+    int sockid,newsockid,portno,clilen,n=1;
+    int size;
+    struct sockaddr_in server_addr,client_addr;
+    sockid=socket(AF_INET,SOCK_STREAM,0);
+    server_addr.sin_family=AF_INET;
+    server_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
+    server_addr.sin_port=htons(6996);
+    bind(sockid,&server_addr,sizeof(server_addr));
 
-    sd = socket(AF_INET, SOCK_STREAM, 0);
-    seradress.sin_family = AF_INET;
+    listen(sockid,5);
 
-    seradress.sin_addr.s_addr = htonl(INADDR_ANY);
-    seradress.sin_port = htons(10200);
-
-    bind(sd, (struct sockaddr *)&seradress, sizeof(seradress));
-
-    listen(sd, 5);
-    len = sizeof(cliaddr);
-    pid_t pid = fork();
-    if (pid == 0)
+    while(1)
     {
-        printf("Child => PPID: %d PID: %d\n", getppid(), getpid());
-        exit(EXIT_SUCCESS);
-    }
-    else if (pid > 0)
-    {
-        printf("Parent => PID: %d\n", getpid());
-        printf("Waiting for child process to finish.\n");
-        wait(NULL);
-        printf("Child process finished.\n");
-    }
-    else
-    {
-        printf("Unable to create child process.\n");
-    }
+        clilen=sizeof(clilen);
+        newsockid=accept(sockid,&client_addr,&clilen);
 
-    while (1)
-    {
-        nd = accept(sd, (struct sockaddr *)&cliaddr, &len);
-
-        if (fork() == 0)
+        if(fork()==0)
         {
-            close(sd);
-            n = read(nd, buf, sizeof(buf));
-            if (n == sizeof(buf))
-                printf("Receieved array successfully!!\n");
-            sort(buf);
-            n = write(nd, buf, sizeof(buf));
-            if (n == sizeof(buf))
-                printf("Sent sorted array successfully!!\n");
+            printf("Created New Child with ID : %d\n",getpid());
+            
+            n=read(newsockid,&size,sizeof(size));
+            int buf[size];
+            n=read(newsockid,buf,sizeof(buf));
+            sort(buf,size);
+            n=write(newsockid,buf,sizeof(buf));
+            int pid=getpid();
+            n=write(newsockid,&pid,sizeof(pid));
+            close(newsockid);
+            exit(0);
         }
-        close(nd);
+        else
+        {
+            close(newsockid);
+        }
     }
 }
