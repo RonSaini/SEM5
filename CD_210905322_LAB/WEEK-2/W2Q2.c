@@ -9,7 +9,7 @@ int main(){
 	// opening files
 	fa = fopen("/home/cdlab/Desktop/CD_210905322_LAB/WEEK-2/sample2.c", "r");
 	fa_ = fopen("/home/cdlab/Desktop/CD_210905322_LAB/WEEK-2/sample2.c", "r");
-	fb = fopen("result2", "w+");
+	fb = fopen("result2new", "w+");
 
 	// checking if file oprns
 	if (fa == NULL){
@@ -24,13 +24,26 @@ int main(){
 	ca_ = getc(fa_);
 
 	// going through the document
-	while(ca != EOF){
-
+	while(ca != EOF)
+	{
+		if(ca=='"')
+		{
+			putc(ca,fb);
+			ca=getc(fa);
+			putc(ca,fb);
+			while(ca!='"')
+			{
+				ca=getc(fa);
+				putc(ca,fb);
+			}
+		}
 		// check if '#' is encountered
-		if(ca == '#'){
+		if(ca == '#')
+		{
 
 			// check if it is actually a directive
-			while(ca_ != '\n'){
+			while(ca_ != '\n')
+			{
 				if(ca_ == '<') flag_1 = 1;
 				if(ca_ == '>') flag_2 = 1;
 				ca_ = getc(fa_);
@@ -39,7 +52,8 @@ int main(){
 			ca_ = getc(fa_);
 
 
-			if(flag_1==1 && flag_2==1){		// removing directive
+			if(flag_1==1 && flag_2==1)
+			{		// removing directive
 				flag_2 = 0;
 				flag_1 = 0;
 
@@ -49,11 +63,14 @@ int main(){
 
 				ca = getc(fa);
 				continue;
-			} else {						// keeping sentence with #
+			} 
+			else 
+			{						// keeping sentence with #
 				flag_2 = 0;
 				flag_1 = 0;
 
-				while(ca != '\n'){
+				while(ca != '\n')
+				{
 					putc(ca, fb);
 					ca = getc(fa);
 				}
