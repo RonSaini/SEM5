@@ -16,7 +16,7 @@ int main()
     struct sockaddr_in seraddr,cliaddr;
     sockfd = socket(AF_INET,SOCK_DGRAM,0);
     seraddr.sin_family = AF_INET;
-    seraddr.sin_addr.s_addr = inet_addr("172.16.59.48");
+    seraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
     seraddr.sin_port = htons(PORTNO);
     bind(sockfd,(struct sockaddr *)&seraddr,sizeof(seraddr));
     int clilen = sizeof(cliaddr);
