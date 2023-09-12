@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <sys/types.h>
+#define num 30
+
+
+void main()
+{
+	
+	// printf("hello");
+	int a = 7;
+	float b_al = 10.2;
+	char c = 'f';
+    /* hello
+      how r u */
+
+
+
+
+	
+	if (a < b_al && a + (b_al) >= 40)
+		printf("#Works");
+	else
+		printf("#Does not work");
+
+	printf("//Hello A");
+	printf("/*Hello B*/");
+}
+int sum(int a, int b)
+{
+	return a + b;
+}
