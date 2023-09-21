@@ -2,7 +2,7 @@
 #include <stdlib.h>
 void main()
 {
-    int ,a;
+    int a;
     char b,c;
 
     a = 10;
