@@ -1,0 +1,76 @@
+Sep 18 03:34:26.360 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Sep 18 03:34:26.360 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 55065.
+Sep 18 03:34:26.368 HYPERVISOR: exec_cmd: hypervisor version 
+Sep 18 03:34:26.368 HYPERVISOR: exec_cmd: hypervisor working_dir /home/student/Desktop/Ronit/untitled/project-files/dynamips 
+Sep 18 03:34:26.368 GENERAL: working_dir=/home/student/Desktop/Ronit/untitled/project-files/dynamips
+Sep 18 03:34:26.369 HYPERVISOR: exec_cmd: hypervisor working_dir /home/student/Desktop/Ronit/untitled/project-files/dynamips/be8ff1aa-0f23-43c3-8cf5-219630ff43dd 
+Sep 18 03:34:26.369 GENERAL: working_dir=/home/student/Desktop/Ronit/untitled/project-files/dynamips/be8ff1aa-0f23-43c3-8cf5-219630ff43dd
+Sep 18 03:34:26.369 HYPERVISOR: exec_cmd: vm create R1 1 c3745 
+Sep 18 03:34:26.369 VM: VM R1 created.
+Sep 18 03:34:26.369 HYPERVISOR: exec_cmd: vm set_con_tcp_port R1 5000 
+Sep 18 03:34:26.369 HYPERVISOR: exec_cmd: c3745 get_mac_addr R1 
+Sep 18 03:34:26.369 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:34:26.369 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:34:26.370 HYPERVISOR: exec_cmd: vm set_idle_pc R1 0x6023f558 
+Sep 18 03:34:26.370 HYPERVISOR: exec_cmd: vm set_ram R1 256 
+Sep 18 03:34:26.370 HYPERVISOR: exec_cmd: vm set_nvram R1 256 
+Sep 18 03:34:26.371 HYPERVISOR: exec_cmd: vm set_disk0 R1 0 
+Sep 18 03:34:26.371 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:34:26.371 HYPERVISOR: exec_cmd: vm slot_add_binding R1 1 0 NM-1FE-TX 
+Sep 18 03:34:26.372 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:34:26.372 HYPERVISOR: exec_cmd: vm slot_add_binding R1 2 0 NM-4T 
+Sep 18 03:34:26.481 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:34:29.111 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:34:31.990 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:38:02.193 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:38:02.790 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:38:18.183 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:39:59.574 HYPERVISOR: exec_cmd: nio create_udp udp-0341eb41-2dd8-4984-bf34-8ed7cf9ad64c 10002 127.0.0.1 10003 
+Sep 18 03:39:59.798 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 1 0 udp-0341eb41-2dd8-4984-bf34-8ed7cf9ad64c 
+Sep 18 03:39:59.799 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:40:58.970 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:41:08.098 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:41:08.098 HYPERVISOR: exec_cmd: vm slot_remove_nio_binding R1 1 0 
+Sep 18 03:41:08.099 HYPERVISOR: exec_cmd: nio delete udp-0341eb41-2dd8-4984-bf34-8ed7cf9ad64c 
+Sep 18 03:41:09.775 HYPERVISOR: exec_cmd: vm set_ios R1 /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:42:58.650 HYPERVISOR: exec_cmd: nio create_udp udp-4630b8f0-25a7-4a5a-8b91-93b17772c3ea 10024 127.0.0.1 10025 
+Sep 18 03:42:58.651 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 0 udp-4630b8f0-25a7-4a5a-8b91-93b17772c3ea 
+Sep 18 03:42:58.651 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:43:04.412 HYPERVISOR: exec_cmd: nio create_udp udp-7bacce94-dfbb-45d9-b0a1-0f892655752c 10028 127.0.0.1 10029 
+Sep 18 03:43:04.413 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 1 udp-7bacce94-dfbb-45d9-b0a1-0f892655752c 
+Sep 18 03:43:04.413 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:43:59.333 HYPERVISOR: exec_cmd: nio create_udp udp-13781dd6-23cf-4c70-ad97-9f03187f06b5 10046 127.0.0.1 10047 
+Sep 18 03:43:59.334 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 1 0 udp-13781dd6-23cf-4c70-ad97-9f03187f06b5 
+Sep 18 03:43:59.335 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:44:40.747 HYPERVISOR: exec_cmd: vm create Ghost 0 c3745 
+Sep 18 03:44:40.747 VM: VM Ghost created.
+Sep 18 03:44:40.748 HYPERVISOR: exec_cmd: vm set_ios Ghost /home/student/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Sep 18 03:44:40.749 HYPERVISOR: exec_cmd: vm set_ghost_status Ghost 1 
+Sep 18 03:44:40.750 HYPERVISOR: exec_cmd: vm set_ghost_file Ghost /home/student/Desktop/Ronit/untitled/project-files/dynamips/c3745-advipservicesk9-mz.124-25d.image-256.ghost 
+Sep 18 03:44:40.750 HYPERVISOR: exec_cmd: vm set_ram Ghost 256 
+Sep 18 03:44:40.750 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Sep 18 03:44:40.750 HYPERVISOR: exec_cmd: vm set_config Ghost configs/i0_startup-config.cfg 
+Sep 18 03:44:40.751 HYPERVISOR: exec_cmd: vm start Ghost 
+Sep 18 03:44:41.050 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Sep 18 03:44:41.051 HYPERVISOR: exec_cmd: vm stop Ghost 
+Sep 18 03:44:41.212 VM: VM Ghost shutdown.
+Sep 18 03:44:41.213 HYPERVISOR: exec_cmd: vm extract_config Ghost 
+Sep 18 03:44:41.214 HYPERVISOR: exec_cmd: vm clean_delete Ghost 
+Sep 18 03:44:41.215 VM: VM Ghost destroyed.
+Sep 18 03:44:41.217 HYPERVISOR: exec_cmd: vm set_ghost_status R1 2 
+Sep 18 03:44:41.218 HYPERVISOR: exec_cmd: vm set_ghost_file R1 /home/student/Desktop/Ronit/untitled/project-files/dynamips/c3745-advipservicesk9-mz.124-25d.image-256.ghost 
+Sep 18 03:44:41.218 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 03:44:41.219 HYPERVISOR: exec_cmd: vm set_config R1 configs/i1_startup-config.cfg 
+Sep 18 03:44:41.220 HYPERVISOR: exec_cmd: vm start R1 
+Sep 18 03:45:39.317 HYPERVISOR: exec_cmd: vm set_ghost_status R1 2 
+Sep 18 03:45:39.319 HYPERVISOR: exec_cmd: vm set_ghost_file R1 /home/student/Desktop/Ronit/untitled/project-files/dynamips/c3745-advipservicesk9-mz.124-25d.image-256.ghost 
+Sep 18 03:45:39.320 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 04:15:03.522 HYPERVISOR: exec_cmd: vm get_status R1 
+Sep 18 04:15:03.533 HYPERVISOR: exec_cmd: vm stop R1 
+Sep 18 04:15:03.665 VM: VM R1 shutdown.
+Sep 18 04:15:03.666 HYPERVISOR: exec_cmd: vm extract_config R1 
+Sep 18 04:15:03.666 HYPERVISOR: exec_cmd: vm delete R1 
+Sep 18 04:15:03.666 VM: VM R1 destroyed.
+Sep 18 04:15:03.667 HYPERVISOR: exec_cmd: hypervisor stop 
+Sep 18 04:15:04.056 HYPERVISOR: Stopped.
+Sep 18 04:15:04.056 GENERAL: reset done.
